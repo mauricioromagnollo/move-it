@@ -9,15 +9,15 @@ import { ChallengeBox } from "../components/ChallengeBox";
 
 import { CountdownContext } from '../contexts/CountdownContext';
 
-import { serializeFor2Digt } from '../helpers/serializeFor2Digt';
+import { serializeFor2Digits } from '../helpers/serializeFor2Digits';
 
 import styles from '../styles/pages/Home.module.css';
 
 export default function Home() {
   const { isActive, minutes, seconds } = useContext(CountdownContext);
 
-  const [minuteLeft, minuteRight] = serializeFor2Digt(minutes);
-  const [secondLeft, secondRight] = serializeFor2Digt(seconds);
+  const [minuteLeft, minuteRight] = serializeFor2Digits(minutes);
+  const [secondLeft, secondRight] = serializeFor2Digits(seconds);
 
   return (
     <div className={styles.container}>
