@@ -41,7 +41,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   }, []);
 
   useEffect(() => {
-
+    Cookies.set('level', String(level));
+    Cookies.set('currentExperience', String(currentExperience));
+    Cookies.set('challengesCompleted', String(challengesCompleted));
   }, [level, currentExperience, challengesCompleted]);
 
   function levelUp() {
