@@ -1,49 +1,23 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 
-import { ChallengesContext } from '../contexts/ChallengesContext';
+import { CountdownContext } from '../contexts/CountdownContext';
+
+import { serializeFor2Digt } from '../helpers/serializeFor2Digt';
 
 import styles from '../styles/components/Countdown.module.css';
 
-let countdownTimeout: NodeJS.Timeout;
-const COUNTER_TIME = 0.1 * 60;
-// const COUNTER_TIME = 25 * 60;
-
 export function Countdown() {
-  const { startNewChallenge } = useContext(ChallengesContext);
+  const { 
+    minutes, 
+    seconds, 
+    hasFinished, 
+    isActive, 
+    startCountdown, 
+    resetCountdown 
+  } = useContext(CountdownContext);
 
-  const [time, setTime] = useState(COUNTER_TIME);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
-
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-
-  const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
-  const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
-
-  function startCountdown() {
-    setIsActive(true);
-  }
-
-  function resetCountdown() {
-    clearTimeout(countdownTimeout);
-    setIsActive(false);
-    setTime(COUNTER_TIME);
-  }
-
-  useEffect(() => {
-    const ONE_SECOND = 1000;
-
-    if (isActive && time > 0) {
-      countdownTimeout = setTimeout(() => {
-        setTime(time - 1);
-      }, ONE_SECOND);
-    } else if (isActive && time === 0) {
-      setHasFinished(true);
-      setIsActive(false);
-      startNewChallenge();
-    }
-  }, [isActive, time]);
+  const [minuteLeft, minuteRight] = serializeFor2Digt(minutes);
+  const [secondLeft, secondRight] = serializeFor2Digt(seconds);
 
   return (
     <div>
